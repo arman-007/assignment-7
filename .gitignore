@@ -1,0 +1,48 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+*.env
+
+# Virtual environment
+venv/
+env/
+
+# Selenium-related files
+chromedriver  # ChromeDriver binary
+geckodriver   # FirefoxDriver binary
+
+# Log files
+*.log
+*.log.*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python packaging
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+
+# Cache files
+*.cache
+.cache/
+
+# Test-related files
+*.pytest_cache
+.tox/
+
+# Miscellaneous
+*.bak
+*.tmp
