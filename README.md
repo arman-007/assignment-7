@@ -1,3 +1,5 @@
+### Downloading setting up ChromeDriver:
+
 #### 1. Go to the ChromeDriver Download page.
 - Download the Chrome Driver with the same version as your updated Chrome.
 - Click the link on the Chrome for Testing availability dashboard: https://chromedriver.chromium.org/downloads
@@ -18,3 +20,9 @@ https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.87/linux64/c
 #### 3. Install the ChromeDriver.
 - Since Chrome Driver is a binary file, there is no separate installation process.
 - Extract the zip archive and copy the chromedriver file to the directory where Chrome Driver should be located.
+
+#### 4. Make the WebDriver executable.
+- Place the WebDriver in the project root and ensure it's executable (For Chrome):
+```bash
+chmod +x ./chromedriver
+```

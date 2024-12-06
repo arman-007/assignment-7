@@ -1,0 +1,2 @@
+testcase,result,comments
+Currency Filter Test,Fail,'str' object is not callable
