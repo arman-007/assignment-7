@@ -1,2 +1,7 @@
 testcase,result,comments
-Script Data Extraction Test,Fail,"If using all scalar values, you must pass an index"
+H1 Tag Existence,Pass,H1 tag exists
+HTML Tag Sequence Test,Fail,"Missing tags: h5, h6"
+Image Alt Attribute Test,Pass,All images have 'alt' attributes.
+URL Status Test,Pass,All URLs are valid.
+Currency Filter Test,Pass,All currency options validated successfully.
+Script Data Extraction Test,Pass,"{'SiteURL': 'https://www.alojamiento.io', 'CampaignID': 'ALOJAMIENTO', 'SiteName': 'alo', 'Browser': 'Chrome', 'Country': 'BD', 'IP': '119.148.25.49'}"

@@ -45,7 +45,7 @@ def extract_script_data(driver, url):
     """
     logging.info(f"Starting Script Data Extraction for URL: {url}")
     testcase = "Script Data Extraction Test"
-    
+
     try:
         # Navigate to the page
         driver.get(url)
@@ -56,15 +56,11 @@ def extract_script_data(driver, url):
 
         # Extract ScriptData from the JavaScript context (using window object or other method)
         script_data = driver.execute_script("return window.ScriptData;")  # Modify this as needed
-        
+
         if not script_data:
             logging.warning("Script data not found on the page.")
             return {"testcase": testcase, "result": "Fail", "comments": "Script data not found."}
 
-        # Log the script data to inspect its structure (optional)
-        # logging.info(f"Extracted Script Data: {script_data}")
-        # print(type(script_data))
-        # Parse the script data and extract the required information
         extracted_data = {
             "SiteURL": script_data["config"]["SiteUrl"],
             "CampaignID": script_data["pageData"]["CampaignId"],  # Example key from the script data
@@ -73,16 +69,7 @@ def extract_script_data(driver, url):
             "Country": script_data["userInfo"]["CountryCode"],  # Example key
             "IP" : script_data["userInfo"]["IP"]
         }
-        print(extracted_data)
-        
-        # Log the extracted data
-        # logging.info(f"Extracted Data: {extracted_data}")
-        
-        # Save the extracted data to a report (using your save_report function)
-        save_report(extracted_data)
-
-        # Return the result as a success
-        return {"testcase": testcase, "result": "Pass", "comments": "Data extraction and report saved successfully."}
+        return {"testcase": testcase, "result": "Pass", "comments": extracted_data}
     
     except Exception as e:
         logging.error(f"Error during Script Data Extraction: {e}")
@@ -98,6 +85,7 @@ def save_report(test_results):
     os.makedirs(directory, exist_ok=True)
 
     # Save the results to a CSV file
+    print(test_results)
     df = pd.DataFrame(test_results)
     df.to_csv(file_path, index=False)
 
@@ -122,14 +110,12 @@ def main():
         ]
         
         for name, test in tests:
-            # print(test(driver, url))
             result = test(driver, url)
-            # print(result)
             test_results.append(result)
             print(test_results)
-        
+
         # Save the report
-        # save_report(test_results)
+        save_report(test_results)
     finally:
         driver.quit()
 

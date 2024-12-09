@@ -20,7 +20,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",  # Log message format
     handlers=[
         logging.FileHandler("automation_test.log"),  # Log to a file
-        logging.StreamHandler()  # Log to the console
+        # logging.StreamHandler()  # Log to the console
     ]
 )
 
@@ -334,7 +334,7 @@ def extract_script_data(driver, url):
     """
     logging.info(f"Starting Script Data Extraction for URL: {url}")
     testcase = "Script Data Extraction Test"
-    
+
     try:
         # Navigate to the page
         driver.get(url)
@@ -345,42 +345,61 @@ def extract_script_data(driver, url):
 
         # Extract ScriptData from the JavaScript context (using window object or other method)
         script_data = driver.execute_script("return window.ScriptData;")  # Modify this as needed
-        
+
         if not script_data:
             logging.warning("Script data not found on the page.")
             return {"testcase": testcase, "result": "Fail", "comments": "Script data not found."}
-        
-        # Parse the script data as required, and prepare the extracted data
+
         extracted_data = {
-            "SiteURL": url,
-            "CampaignID": script_data.get("campaignId", "N/A"),  # Example key from the script data
-            "SiteName": script_data.get("siteName", "N/A"),
-            "Browser": driver.capabilities['browserName'],
-            "Country": script_data.get("country", "N/A")  # Example key from the script data
+            "SiteURL": script_data["config"]["SiteUrl"],
+            "CampaignID": script_data["pageData"]["CampaignId"],  # Example key from the script data
+            "SiteName": script_data["config"]["SiteName"],  # Example key
+            "Browser": script_data["userInfo"]["Browser"],  # Example key
+            "Country": script_data["userInfo"]["CountryCode"],  # Example key
+            "IP" : script_data["userInfo"]["IP"]
         }
-
-        # Save the extracted data using the save_report function
-        save_report(extracted_data)
-        logging.info(f"Script Data extracted and saved for URL: {url}")
-        
-        return {"testcase": testcase, "result": "Pass", "comments": "Script data successfully extracted and saved."}
-
+        return {"testcase": testcase, "result": "Pass", "comments": extracted_data}
+    
     except Exception as e:
-        logging.error(f"Error during Script Data Extraction: {str(e)}")
-        return {"testcase": testcase, "result": "Fail", "comments": str(e)}
+        logging.error(f"Error during Script Data Extraction: {e}")
+        return {"testcase": testcase, "result": "Fail", "comments": f"Error: {e}"}
 
 # Save Report
 def save_report(test_results):
-    # Define the directory and file path
+    # Define the directory and file path for the Excel report
     directory = "reports"
-    file_path = os.path.join(directory, "test_report.csv")
+    file_path = os.path.join(directory, "test_report.xlsx")
 
     # Create the directory if it doesn't exist
     os.makedirs(directory, exist_ok=True)
 
-    # Save the results to a CSV file
-    df = pd.DataFrame(test_results)
-    df.to_csv(file_path, index=False)
+    # Prepare the data for the Excel report
+    formatted_results = []
+    
+    for result in test_results:
+        # Extract the 'testcase', 'result', and 'comments'
+        testcase = result['testcase']
+        test_result = result['result']
+        
+        # Check if comments are a dictionary or a string
+        comments = result['comments']
+        
+        # If comments are a dictionary, convert it to a string for easier viewing
+        if isinstance(comments, dict):
+            comments = "; ".join([f"{key}: {value}" for key, value in comments.items()])
+        
+        # Append the formatted data as a row
+        formatted_results.append({
+            'testcase': testcase,
+            'result': test_result,
+            'comments': comments
+        })
+    
+    # Create a DataFrame from the formatted results
+    df = pd.DataFrame(formatted_results)
+
+    # Save the DataFrame to an Excel file
+    df.to_excel(file_path, index=False, engine='openpyxl')
 
     print(f"Report saved at {file_path}")
 
@@ -393,18 +412,16 @@ def main():
     try:
         # Execute tests
         tests = [
-            # ("H1 Tag Test", test_h1_tag_existence),
-            # ("HTML Sequence Test", test_html_sequence),
-            # ("Image Alt Test", test_image_alt),
-            # ("URL Status Code Test", test_url_status),
-            # ("Currency Filter Test", test_currency_filter),
+            ("H1 Tag Test", test_h1_tag_existence),
+            ("HTML Sequence Test", test_html_sequence),
+            ("Image Alt Test", test_image_alt),
+            ("URL Status Code Test", test_url_status),
+            ("Currency Filter Test", test_currency_filter),
             ("Scrape data from script data", extract_script_data),
         ]
         
         for name, test in tests:
-            # print(test(driver, url))
             result = test(driver, url)
-            # print(result)
             test_results.append(result)
             print(test_results)
         
