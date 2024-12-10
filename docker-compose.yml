@@ -1,0 +1,14 @@
+# version: "3.9"
+services:
+  selenium-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - BASE_URL=https://www.alojamiento.io
+      - CHROME_DRIVER_PATH=/usr/local/bin/chromedriver
+      - FIREFOX_DRIVER_PATH=/usr/local/bin/geckodriver
+    stdin_open: true
+    tty: true
