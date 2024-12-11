@@ -75,7 +75,7 @@ The project targets the website: [https://www.alojamiento.io](https://www.alojam
    ```
    - This runs in Firefox Browser and headless mode
 
-## Usage [Using docker (headless mode only)]
+## Usage [If you want to use docker (headless mode only)]
 1. **Docker Build**
    - After cloning the project run these command from project root
    ```bash
@@ -101,16 +101,6 @@ The project targets the website: [https://www.alojamiento.io](https://www.alojam
    python test_automation.py --browser firefox --headless
    ```
    - This runs in Firefox Browser and headless mode
-
-### Running the Tests
-1. **Run All Tests**
-   Execute the script to run all test cases:
-   ```bash
-   python test_automation.py
-   ```
-
-2. **Individual Tests**
-   Run individual test functions as needed by modifying the `test_automation.py` file.
 
 ### Report Generation
 - Test results are saved in the `reports` directory.
