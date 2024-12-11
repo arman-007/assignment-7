@@ -46,3 +46,7 @@ build/
 # Miscellaneous
 *.bak
 *.tmp
+
+
+# reports
+/reports/

@@ -44,43 +44,63 @@ The project targets the website: [https://www.alojamiento.io](https://www.alojam
    pip install -r requirements.txt
    ```
 
-4. **Downloading and Setting Up ChromeDriver**
-
-#### 1. Go to the ChromeDriver Download page.
-- Download the Chrome Driver with the same version as your updated Chrome.
-- Click the link on the Chrome for Testing availability dashboard: [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads)
-- [https://googlechromelabs.github.io/chrome-for-testing/](https://googlechromelabs.github.io/chrome-for-testing/) to find the Chrome Driver matching your updated Chrome version.
-
-#### 2. Download the ChromeDriver.
-- Download the Chrome Driver version that matches your Chrome.
-- [https://googlechromelabs.github.io/chrome-for-testing/](https://googlechromelabs.github.io/chrome-for-testing/)
-```
-For General Linux distributions, download linux64.
-- For Chrome version: https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.141/linux64/chromedriver-linux64.zip
-```
-- or paste this URL in your browser's search bar
-```bash
-https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.87/linux64/chromedriver-linux64.zip
-```
-
-#### 3. Install the ChromeDriver.
-- Since Chrome Driver is a binary file, there is no separate installation process.
-- Extract the zip archive and copy the chromedriver file to the directory where Chrome Driver should be located.
-
-#### 4. Make the WebDriver executable.
-- Place the WebDriver in the project root and ensure it's executable (For Chrome):
-```bash
-chmod +x ./chromedriver
-```
-
-5. **Set Up .env File**
-   - This project uses environment variables to configure settings. Create a .env file in the root directory of the     project and provide the following keys:
+4. **Set Up .env File**
+   - This project uses environment variables to configure settings. Create a .env file in the root directory of the project and provide the following keys:
      ```env
-     CHROME_DRIVER_PATH=./chromedriver
      TEST_URL=https://www.alojamiento.io/property/apartamentos-centro-col%c3%b3n/BC-189483
      ```
+   - This is the url that is going to be tested throughout the test.
 
-## Usage
+## Usage [Options]
+1. **Run the script in Chrome**
+   ```bash
+   python test_automation.py
+   ```
+   - This runs in Chrome Browser and window mode by default
+
+2. **Run the script in Firefox**
+   ```bash
+   python test_automation.py --browser firefox
+   ```
+   - This runs in Firefox Browser and window mode
+
+2. **Run the script in Headless mode**
+   ```bash
+   python test_automation.py --headless
+   ```
+   - This runs in Chrome Browser and headless mode by default
+
+   ```bash
+   python test_automation.py --browser firefox --headless
+   ```
+   - This runs in Firefox Browser and headless mode
+
+## Usage [Using docker (headless mode only)]
+1. **Docker Build**
+   - After cloning the project run these command from project root
+   ```bash
+   docker compose build
+   ```
+
+   ```bash
+   docker compose up -d
+   ```
+
+2. **To use the project from docker**
+   ```bash
+   docker  exec -it assignment-7-selenium-test-1 bash
+   ```
+
+3. **Run the same options but only headless ones**
+   ```bash
+   python test_automation.py --headless
+   ```
+   - This runs in Chrome Browser and headless mode by default
+
+   ```bash
+   python test_automation.py --browser firefox --headless
+   ```
+   - This runs in Firefox Browser and headless mode
 
 ### Running the Tests
 1. **Run All Tests**
@@ -94,7 +114,7 @@ chmod +x ./chromedriver
 
 ### Report Generation
 - Test results are saved in the `reports` directory.
-- The file is named `test_report.xlsx` and contains columns for `testcase`, `result`, and `comments`.
+- The file is named `test_report.xlsx`.
 
 ### Test Cases
 #### 1. **H1 Tag Existence**
@@ -129,13 +149,12 @@ project-directory/
 ├── requirements.txt         # Python dependencies
 ├── reports/                 # Directory for reports
 ├── .env                     # Environment variables
-├── chromedriver             # Chrome WebDriver executable
 └── README.md                # Project documentation
 ```
 
 ## Additional Notes
 - **Logging**: The script uses Python's `logging` module to log test progress and errors.
-- **Browser Window**: The script launches Chrome in full-screen mode for better visibility and accuracy.
+- **Browser Window**: The script launches browser in full-screen mode for better visibility and accuracy.
 - **Scalability**: The modular structure allows easy addition of new test cases.
 
 

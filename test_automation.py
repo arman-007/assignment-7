@@ -52,11 +52,11 @@ def main():
     try:
         # Execute tests
         tests = [
-            # ("H1 Tag Test", test_h1_tag_existence),
+            ("H1 Tag Test", test_h1_tag_existence),
             # ("HTML Sequence Test", test_html_sequence),
             # ("Image Alt Test", test_image_alt),
             # ("URL Status Code Test", test_url_status),
-            ("Currency Filter Test", test_currency_filter),
+            # ("Currency Filter Test", test_currency_filter),
             # ("Scrape data from script data", extract_script_data),
         ]
         

@@ -10,13 +10,13 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 
 
 load_dotenv()
-CHROME_DRIVER_PATH = os.getenv("CHROME_DRIVER_PATH")
-FIREFOX_DRIVER_PATH = os.getenv("FIREFOX_DRIVER_PATH")
+# CHROME_DRIVER_PATH = os.getenv("CHROME_DRIVER_PATH")
+# FIREFOX_DRIVER_PATH = os.getenv("FIREFOX_DRIVER_PATH")
 
 
 def get_chrome_driver(headless=False):
     """Set up and return a Chrome WebDriver."""
-    service = ChromeService(CHROME_DRIVER_PATH)
+    # service = ChromeService(CHROME_DRIVER_PATH)
     options = webdriver.ChromeOptions()
     if headless:
         options.add_argument("--headless")  # Run Chrome in headless mode
@@ -40,7 +40,7 @@ def get_firefox_driver(headless=False):
         os.makedirs(temp_dir)
     os.environ["TMPDIR"] = temp_dir
 
-    service = FirefoxService(FIREFOX_DRIVER_PATH)
+    # service = FirefoxService(FIREFOX_DRIVER_PATH)
     options = webdriver.FirefoxOptions()
     if headless:
         options.add_argument("--headless")
