@@ -35,7 +35,7 @@ The project targets the website: [https://www.alojamiento.io](https://www.alojam
 
 2. **Set up Virtual Environment**
    ```bash
-   python -m venv env
+   python3 -m venv env
    source env/bin/activate   # On Windows: env\Scripts\activate
    ```
 
